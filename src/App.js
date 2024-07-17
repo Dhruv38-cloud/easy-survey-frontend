@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import CreateSurvey from './components/CreateSurvey';
+import ProtectedRoute from './components/ProtectedRoute';
+import EditSurvey from './components/EditSurvey';
+import Header from './components/Header';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header/>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route 
+          path="/" 
+          element={
+            <ProtectedRoute>
+              <CreateSurvey />
+            </ProtectedRoute>
+          } 
+        />
+        <Route path="/edit-survey/:id"
+        element={
+          <ProtectedRoute>
+            <EditSurvey />
+          </ProtectedRoute>
+        } />
+
+        {/* Add more routes as needed */}
+      </Routes>
+    </Router>
   );
 }
 
